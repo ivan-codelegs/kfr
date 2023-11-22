@@ -22,6 +22,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
+set(CMAKE_CXX_VISIBILITY_PRESET "default")
+set(CMAKE_C_VISIBILITY_PRESET "default")
+set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
+
 if (CPU_ARCH)
     if (NOT KFR_ARCH)
         message(
@@ -204,7 +208,6 @@ endif ()
 function (add_arch_library NAME ARCH SRCS DEFS)
     add_library(${NAME}_${ARCH} ${SRCS})
     target_link_libraries(${NAME}_${ARCH} kfr)
-    set_property(TARGET ${NAME}_${ARCH} PROPERTY VISIBILITY_INLINES_HIDDEN ON)
     target_set_arch(${NAME}_${ARCH} PRIVATE ${ARCH})
     target_compile_options(${NAME}_${ARCH} PRIVATE ${DEFS})
     target_link_libraries(${NAME}_all INTERFACE ${NAME}_${ARCH})
