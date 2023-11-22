@@ -1,12 +1,6 @@
 jobs:
 - job: macOS_x86_64_Clang_Release
   timeoutInMinutes: 180
-  strategy:
-    matrix:
-      xcode11:
-        XCODE_VER: 13.2.1
-      xcode10:
-        XCODE_VER: 12.5.1
   pool:
     vmImage: 'macOS-11'
   steps:
@@ -23,6 +17,6 @@ jobs:
 
       sde64 -chip_check_exe_only -- $(Agent.TempDirectory)/sde-bin/intel64/nullapp
 
-      /bin/bash -c "sudo xcode-select -s /Applications/Xcode_$(XCODE_VER).app/Contents/Developer"
+      /bin/bash -c "sudo xcode-select -s /Applications/Xcode_13.2.1.app/Contents/Developer"
       brew install ninja
-      ci/run.sh build-release -DKFR_ENABLE_CAPI_BUILD=ON -DKFR_USE_SDE=ON -DKFR_ARCH_TESTS=avx2 -DKFR_ARCH=sse2 -DKFR_ENABLE_DFT_MULTIARCH=ON -DCMAKE_BUILD_TYPE=Release      
+      ci/run.sh build-release -DKFR_USE_SDE=ON -DKFR_ARCH=sse2 -DKFR_ENABLE_DFT_MULTIARCH=ON -DCMAKE_BUILD_TYPE=Release      
