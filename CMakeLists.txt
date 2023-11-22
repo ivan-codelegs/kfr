@@ -234,6 +234,10 @@ if (KFR_ENABLE_DFT)
         add_arch_library(kfr_dft avx2 "${KFR_DFT_SRC}" "${KFR_DFT_DEFS}")
         add_arch_library(kfr_dft avx512 "${KFR_DFT_SRC}" "${KFR_DFT_DEFS}")
 
+        if (APPLE)
+            target_link_options(kfr_dft_all INTERFACE -Wl,-force_load $<TARGET_FILE:kfr_dft_sse2>)
+        endif()
+
     else ()
         add_library(kfr_dft ${KFR_DFT_SRC})
         target_link_libraries(kfr_dft kfr use_arch)
